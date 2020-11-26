@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% if user.is_authenticated %}
+		<p>Connecté en tant que :<strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+		<a type="button" href="{% url 'payement' %}">Payer</a>
+		<a type="button" href="{% url 'vuepay' %}">Voir vos payements</a>
+
+	{% else %}
+		<h3>Bonjour Anonymous</h3>
+		<h4>Pour payer Connectez vous d'abord en cliquant ici dessous</h4>
+		<a type="button" href="{% url 'connexion' %}">Connecter</a>
+		<h4>Pas de comptes ? Inscrivez vous ici dessous</h4>
+		<a type="button" href="{% url 'inscription' %}">Inscrption</a>
+	{% endif %}
+</body>
+</html>
