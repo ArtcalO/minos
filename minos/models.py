@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
-
-TOTAL= 620000		
+from django.utils import timezone	
 
 class Minerval(models.Model):
 	amount = models.FloatField()
 	academic_year = models.CharField(max_length=100)
+	faculty = models.ForeignKey("Faculty", on_delete=models.CASCADE)
 
 
 class Faculty(models.Model):
@@ -18,13 +17,23 @@ class Departement(models.Model):
 	faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
 
 
+class Comptable(models.Model):
+	user = models.OneToOneField(User, null=True, verbose_name='Comptable' ,unique=True,on_delete=models.CASCADE)
+	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/comptables/")
+	matricule = models.IntegerField(null=True, blank=True)
+	birthday = models.DateField(null=True, blank=True, max_length=100)
+
+	def __str__(self):
+		return f"{self.user.username} - {self.matricule} "
+
 class Student(models.Model):
 	user = models.OneToOneField(User, null=True, unique=True,on_delete=models.CASCADE)
 	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/students/")
 	matricule = models.IntegerField(null=True, blank=True)
-	departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
 	birthday = models.DateField(null=True, blank=True, max_length=100)
+	departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
 	academic_year = models.CharField(max_length=50)
+	inscription_date = models.DateField()
 
 	def __str__(self):
 		return f"{self.user.username}"
@@ -45,23 +54,20 @@ class BankToken(models.Model):
 	bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
 	token_number = models.IntegerField()
 	account_number = models.IntegerField()
-	account_holder = models.CharField(max_length=30)
+	account_holder = models.CharField(default="ULT")
 	customer = models.ForeignKey(Student, on_delete=models.CASCADE)
-	amount_paid_bank = models.FloatField()
+	paid_amount = models.FloatField(related_name='Paid amount in bank')
 	motif = models.CharField(max_length=50)
 	date = models.DateField(default=timezone.now)
 
 	def __str__(self):
-		return f"{self.token_number} by {self.customer.user.username} - {self.amount_paid_bank} "
+		return f"{self.token_number} by {self.customer.user.username} - {self.paid_amount} "
 
-class Comptable(models.Model):
-	user = models.OneToOneField(User, null=True, verbose_name='Comptable' ,unique=True,on_delete=models.CASCADE)
-	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/comptables/")
-	matricule = models.IntegerField(null=True, blank=True, )
-	birthday = models.DateField(null=True, blank=True, max_length=100)
 
-	def __str__(self):
-		return f"{self.user.username} - {self.matricule} "
+class HistoryBankToken(models.Model):
+	student = models.ForeignKey(Student, on_delete=models.CASCADE)
+	bank_token = models.ForeignKey(BankToken, on_delete=models.CASCADE)
+	date = models.DateField()
 
 class UltToken(models.Model):
 	token_number = models.IntegerField()
@@ -74,12 +80,11 @@ class UltToken(models.Model):
 	def __str__(self):
 		return f"{self.student.user.username} - {self.amount_paid_ult} "
 
-class PaidStudent(models.Model):
+class AlreadyPaidStudent(models.Model):
 	student = models.ForeignKey(Student, on_delete=models.CASCADE)
 	paid_already = models.FloatField()
 	remain = models.FloatField(default=TOTAL)
 	total_to_pay = models.ForeignKey(Minerval, on_delete=models.CASCADE)
-	percent = models.IntegerField()
 	tranche_1 = models.BooleanField(False)
 	tranche_2 = models.BooleanField(False)
 	tranche_3 = models.BooleanField(False)
