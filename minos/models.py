@@ -7,11 +7,9 @@ class Minerval(models.Model):
 	academic_year = models.CharField(max_length=100)
 	faculty = models.ForeignKey("Faculty", on_delete=models.CASCADE)
 
-
 class Faculty(models.Model):
 	name = models.CharField(max_length=100)
 	
-
 class Departement(models.Model):
 	name = models.CharField(max_length=100)
 	faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE)
@@ -54,9 +52,9 @@ class BankToken(models.Model):
 	bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
 	token_number = models.IntegerField()
 	account_number = models.IntegerField()
-	account_holder = models.CharField(default="ULT")
+	account_holder = models.CharField(max_length=20, default="ULT")
 	customer = models.ForeignKey(Student, on_delete=models.CASCADE)
-	paid_amount = models.FloatField(related_name='Paid amount in bank')
+	paid_amount = models.FloatField()
 	motif = models.CharField(max_length=50)
 	date = models.DateField(default=timezone.now)
 
@@ -83,7 +81,7 @@ class UltToken(models.Model):
 class AlreadyPaidStudent(models.Model):
 	student = models.ForeignKey(Student, on_delete=models.CASCADE)
 	paid_already = models.FloatField()
-	remain = models.FloatField(default=TOTAL)
+	remain = models.FloatField(default=0)
 	total_to_pay = models.ForeignKey(Minerval, on_delete=models.CASCADE)
 	tranche_1 = models.BooleanField(False)
 	tranche_2 = models.BooleanField(False)
