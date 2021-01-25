@@ -26,12 +26,12 @@ class Comptable(models.Model):
 
 class Student(models.Model):
 	user = models.OneToOneField(User, null=True, unique=True,on_delete=models.CASCADE)
-	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/students/")
 	matricule = models.IntegerField(null=True, blank=True)
 	birthday = models.DateField(null=True, blank=True, max_length=100)
-	departement = models.ForeignKey(Departement, on_delete=models.CASCADE)
-	academic_year = models.CharField(max_length=50)
-	inscription_date = models.DateField()
+	academic_year = models.CharField(blank=True, null=True, max_length=50)
+	inscription_date = models.DateField(blank=True, null=True)
+	departement = models.ForeignKey(Departement, blank=True, null=True, on_delete=models.CASCADE)
+	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/students/")
 
 	def __str__(self):
 		return f"{self.user.username}"
