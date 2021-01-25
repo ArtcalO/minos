@@ -2,41 +2,56 @@ from django.views import View
 from . forms import *
 from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/connexion/')
 def home(request):
-	txt = "hey brother"
+	txt = "<h1>Connected</h1>"
 	return render(request, 'home.html', locals())
 
+def connexion(request):
+	login_form = ConnexionForm(request.POST)
+	try:
+		next_p = request.GET["next"]
+	except:
+		next_p = ""
+	if request.method == "POST" and login_form.is_valid():
+		username = login_form.cleaned_data['username']
+		password = login_form.cleaned_data['password']
+		user = authenticate(username=username, password=password)
+		if user:  # Si l'objet renvoyé n'est pas None
+			login(request, user)
+			if next_p:
+				return redirect(next_p)
+			else:
+				return redirect(home)
+	login_form = ConnexionForm()
+	return render(request, 'login.html', locals())
+
+def deconnexion(request):
+	logout(request)
+	return redirect(connexion)
+
 def register(request):
-	register_form = studentForm(request.POST or None, request.FILES)
 	if request.method == "POST" :
+		register_form = StudentForm(request.POST, request.FILES)
 		if register_form.is_valid():
-			username = register_form.cleaned_data['username']
-			print('rrrrrrrrrrrrrrr')
-			print(username)
-			print('rrrrrrrrrrrrrrrr')
 			first_name = register_form.cleaned_data['first_name']
 			last_name = register_form.cleaned_data['last_name']
 			password = register_form.cleaned_data['password']
 			password2 = register_form.cleaned_data['password2']
 			email = register_form.cleaned_data['email']
 			avatar = register_form.cleaned_data['avatar']
-			matricule = register_form.cleaned_data['matricule']
-			birthday = register_form.cleaned_data['birthday']
-			inscription_date = register_form.cleaned_data['inscription_date']
 			if password==password2:
-				try:
-					user = User.objects.create_user(
-						username=username,password=password)
-					print(user)
-					user.first_name=first_name
-					user.last_name=last_name
-					user.email=email
-					user.save()
-					Student(user=user, avatar=avatar,matricule = matricule,birthday = birthday,inscription_date = inscription_date).save()
-					if user:
-						login(request, user)
-						return redirect('home')
-				except Exception as e:
-					messages.error(request, "name Already exit")
-	register_form = studentForm()
+				user = User.objects.create_user(
+					username=email, 
+					email=email, 
+					password=password)
+				user.first_name, user.last_name = first_name, last_name
+				user.save()
+				Student(user=user, avatar=avatar).save()
+		if user:
+			login(request, user)
+			return redirect(home)
+	register_form = StudentForm()
 	return render(request, 'register.html', locals())

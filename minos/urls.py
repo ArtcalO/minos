@@ -3,7 +3,9 @@ from. import views
 
 urlpatterns = [
     path('', views.home, name="home"),
+    path('connexion/', views.connexion, name="connexion"),
     path('inscription/', views.register, name="inscription"),
+    path('deconnexion/', views.deconnexion, name="deconnexion"),
     #path('payement', views.payement, name="payement"),
     #path('deconnexion', views.deconnexion, name="deconnexion"),
     #path('connexion', views.connexion, name="connexion"),
