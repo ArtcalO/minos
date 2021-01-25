@@ -6,5 +6,5 @@ admin.site.register(Bank)
 admin.site.register(BankToken)
 admin.site.register(Comptable)
 admin.site.register(UltToken)
-admin.site.register(PaidStudent)
+admin.site.register(AlreadyPaidStudent)
 # Register your models here.
