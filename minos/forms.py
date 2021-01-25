@@ -1,23 +1,73 @@
 from django import forms
 from . models import *
 
-class studentForm(forms.Form):
-	username=forms.CharField(max_length=20)
-	first_name=forms.CharField(max_length=20)
-	last_name=forms.CharField(max_length=20)
-	email=forms.EmailField(max_length=20)
-	password=forms.CharField(max_length=20, widget=forms.PasswordInput)
-	password1=forms.CharField(max_length=20, widget=forms.PasswordInput)
-	#--------------------#
-	avatar = forms.ImageField()
-	matricule = forms.IntegerField()
-	birthday = forms.DateField(widget = forms.DateInput(
-	        attrs={
-	            'type':'date',
-	        }
-	    ))
-	inscription_date = forms.DateField(widget = forms.DateInput(
-	        attrs={
-	            'type':'date',
-	        }
-	    ))
+class StudentForm(forms.Form):
+
+	first_name= forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+				'placeholder':'Votre nom',
+				'type':'text'
+
+				}
+			)
+		)
+
+	last_name= forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+				'placeholder':'Votre prenom',
+				'type':'text'
+				}
+			)
+		)
+	email = forms.EmailField(
+		widget = forms.TextInput(
+			attrs = {
+				'placeholder':'Adresse electronique',
+				'type':'email'
+
+				}
+			)
+		)
+	password = forms.CharField(
+		widget=forms.PasswordInput(
+			attrs={
+				'placeholder':'Mot de passe ',
+				'type':'password'
+				}
+			)
+		)
+	password2 = forms.CharField(
+		widget=forms.PasswordInput(
+			attrs={
+				'placeholder':'Confirmer mot de passe ',
+				'type':'password'
+				}
+			)
+		)
+	avatar = forms.ImageField(
+		widget=forms.FileInput(
+			attrs={
+				'type':'file'
+				}
+			)
+		)
+
+class ConnexionForm(forms.Form):
+    username = forms.CharField(
+    	widget=forms.TextInput(
+    		attrs={
+    			'placeholder':'E-mail',
+    			'type':'email'
+    			}
+    		)
+    	)
+    password = forms.CharField(
+    	widget=forms.PasswordInput(
+    		attrs={
+    			'placeholder':'Mot de passe ',
+    			'type':'password'
+    			}
+    		)
+    	)
