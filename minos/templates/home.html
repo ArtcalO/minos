@@ -8,7 +8,6 @@
     <title>Se connecter</title>
 </head>
 <body>
-    <button type="submit"><a href="{% url "deconnexion" %}">Se Deconnecter</a></button>
-    {{txt}}
+    <h1>You are home <strong>{{ user.username }}</strong></h1>
 </body>
 </html>
