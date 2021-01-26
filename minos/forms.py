@@ -71,3 +71,24 @@ class ConnexionForm(forms.Form):
     			}
     		)
     	)
+
+class UpdateProfilForm(forms.ModelForm):
+	birthday = forms.DateField(
+		widget=forms.TextInput(
+			attrs={
+				'placeholder':'yyyy-mm-dd ',
+				'type':'date'
+				}
+			)
+		)
+	inscription_date = forms.DateField(
+		widget=forms.TextInput(
+			attrs={
+				'placeholder':'yyyy-mm-dd ',
+				'type':'date'
+				}
+			)
+		)
+	class Meta:
+		model = Student
+		exclude = ['user', 'avatar',]
