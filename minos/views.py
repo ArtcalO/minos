@@ -6,8 +6,24 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/connexion/')
 def home(request):
-	txt = "<h1>Connected</h1>"
-	return render(request, 'home.html', locals())
+	student = Student.objects.get(user=request.user)
+	if(student.verifyProfil()):
+		return render(request, 'home.html', locals())
+	return redirect(completeProfil)
+
+@login_required(login_url='/connexion/')
+def completeProfil(request):
+	student = Student.objects.get(user=request.user)
+	profil_form = UpdateProfilForm(request.POST, request.FILES, instance=student)
+	if request.method == "POST":
+		if(profil_form.is_valid()):
+			profil_form.save(commit=False)
+			profil_form.user = request.user
+			profil_form.save()
+			return redirect(home)
+	profil_form = UpdateProfilForm(instance=student)
+	return render(request, 'complete_profil.html', locals())
+
 
 def connexion(request):
 	login_form = ConnexionForm(request.POST)
@@ -24,7 +40,7 @@ def connexion(request):
 			if next_p:
 				return redirect(next_p)
 			else:
-				return redirect(home)
+				return redirect(completeProfil)
 	login_form = ConnexionForm()
 	return render(request, 'login.html', locals())
 
@@ -52,6 +68,7 @@ def register(request):
 				Student(user=user, avatar=avatar).save()
 		if user:
 			login(request, user)
-			return redirect(home)
+			return redirect(completeProfil)
 	register_form = StudentForm()
 	return render(request, 'register.html', locals())
+
