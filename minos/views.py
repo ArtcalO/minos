@@ -7,23 +7,65 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/connexion/')
 def home(request):
 	student = Student.objects.get(user=request.user)
-	if student.verifyProfil():
+	if ((student.verifyStep1() and student.verifyFac()) or (student.verifyStep1() and student.verifyFac())):
 		return render(request, 'home.html', locals())
 	else:
-		return redirect(completeProfil)
+		return redirect(register)
 
 @login_required(login_url='/connexion/')
-def completeProfil(request):
-	student = Student.objects.get(user=request.user)
-	profil_form = UpdateProfilForm(request.POST, request.FILES, instance=student)
-	if request.method == "POST":
-		if(profil_form.is_valid()):
-			print(profil_form)
-			profil_form.save()
-		return redirect(home)
+def register2(request):
+
+	if(request.user):
+		student = Student.objects.get(user=request.user)
+		profil_form = RegisterForm2(request.POST, request.FILES, instance=student)
+		if request.method == "POST":
+			if(profil_form.is_valid()):
+				fac = profil_form.cleaned_data['fac']
+				inst = profil_form.cleaned_data['inst']
+				profil_form.save()
+				print(fac)
+				print(inst)
+				if fac:
+					return redirect(registerFac)
+				else:
+					return redirect(registerInst)
+		else:
+			profil_form = RegisterForm2(instance=student)
+		return render(request, 'register2.html', locals())
 	else:
-		profil_form = UpdateProfilForm(instance=student)
-	return render(request, 'complete_profil.html', locals())
+		return redirect(register)
+
+@login_required(login_url='/connexion/')
+def registerFac(request):
+	student = Student.objects.get(user=request.user)
+	if(student.verifyStep1()):
+		profil_form = RegisterFacForm(request.POST, request.FILES, instance=student)
+		if request.method == "POST":
+			if(profil_form.is_valid()):
+				print(profil_form)
+				profil_form.save()
+			return redirect(home)
+		else:
+			profil_form = RegisterFacForm(instance=student)
+		return render(request, 'register_fac.html', locals())
+	else:
+		return redirect(register2)
+
+@login_required(login_url='/connexion/')
+def registerInst(request):
+	student = Student.objects.get(user=request.user)
+	if student.verifyStep1():
+		profil_form = RegisterInstForm(request.POST, request.FILES, instance=student)
+		if request.method == "POST":
+			if(profil_form.is_valid()):
+				print(profil_form)
+				profil_form.save()
+			return redirect(home)
+		else:
+			profil_form = RegisterInstForm(instance=student)
+		return render(request, 'register_inst.html', locals())
+	else:
+		return redirect(register2)
 
 
 def connexion(request):
@@ -69,7 +111,7 @@ def register(request):
 				Student(user=user, avatar=avatar).save()
 		if user:
 			login(request, user)
-			return redirect(completeProfil)
+			return redirect(register2)
 	register_form = StudentForm()
 	return render(request, 'register.html', locals())
 
