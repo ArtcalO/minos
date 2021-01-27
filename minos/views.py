@@ -7,9 +7,10 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/connexion/')
 def home(request):
 	student = Student.objects.get(user=request.user)
-	if(student.verifyProfil()):
+	if student.verifyProfil():
 		return render(request, 'home.html', locals())
-	return redirect(completeProfil)
+	else:
+		return redirect(completeProfil)
 
 @login_required(login_url='/connexion/')
 def completeProfil(request):
@@ -17,11 +18,11 @@ def completeProfil(request):
 	profil_form = UpdateProfilForm(request.POST, request.FILES, instance=student)
 	if request.method == "POST":
 		if(profil_form.is_valid()):
-			profil_form.save(commit=False)
-			profil_form.user = request.user
+			print(profil_form)
 			profil_form.save()
-			return redirect(home)
-	profil_form = UpdateProfilForm(instance=student)
+		return redirect(home)
+	else:
+		profil_form = UpdateProfilForm(instance=student)
 	return render(request, 'complete_profil.html', locals())
 
 
@@ -40,7 +41,7 @@ def connexion(request):
 			if next_p:
 				return redirect(next_p)
 			else:
-				return redirect(completeProfil)
+				return redirect(home)
 	login_form = ConnexionForm()
 	return render(request, 'login.html', locals())
 

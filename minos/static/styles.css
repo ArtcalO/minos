@@ -8,7 +8,7 @@
     justify-content: center;
     flex-wrap: wrap;
 }
-.login, .register{
+.login, .register, .profile{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -17,7 +17,7 @@
     padding: 30px;
     transform: translate(-50%, -50%);
 }
-input{
+input[type='text'], input[type='password'], input[type='email'], .radio, select{
     display: block;
     padding: 3px 5px;
     border-top: 0px;
@@ -43,7 +43,7 @@ hr{
     background: #555555;
     margin: 20px 0;
 }
-input:focus{
+input:focus, select:focus{
     outline: none;
 }
 button:hover{
@@ -62,9 +62,30 @@ button:hover{
     color: #777777;
     margin-top: 12px;
 }
+.split{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.right, .left{
+    flex-basis: 45%;
+}
+.radio{
+    border-bottom: none;
+    color: #777777;
+    font-style: italic;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+.btn{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn button{
+    flex-basis: 50%;
+}
 
-
-@media only screen and (max-width:480px){
+@media only screen and (max-width: 480px){
     .login, .register{
         width: 300px;
     }
