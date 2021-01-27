@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "styles.css" %}">
+    <title>Step 3-Faculte</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="register">
+            <form method="POST" action="{% url "registerFac" %}" autocomplete="false">
+                {% csrf_token %}
+                    {{profil_form.as_p}}
+                <div class="btn">
+                    <button type="submit">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
