@@ -72,7 +72,7 @@ class ConnexionForm(forms.Form):
     		)
     	)
 
-class UpdateProfilForm(forms.ModelForm):
+class RegisterForm2(forms.ModelForm):
 	birthday = forms.DateField(
 		widget=forms.TextInput(
 			attrs={
@@ -89,6 +89,24 @@ class UpdateProfilForm(forms.ModelForm):
 				}
 			)
 		)
+
 	class Meta:
 		model = Student
-		exclude = ['user', 'avatar',]
+		exclude = ['user', 'avatar','niveau','departement','faculty','institut']
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		self.fields['fac'].widget.attrs.update({'class':'radio','type':'radio', 'name':'type'})
+		self.fields['inst'].widget.attrs.update({'class':'radio','type':'radio', 'name':'type'})
+
+class RegisterFacForm(forms.ModelForm):
+
+	class Meta:
+		model = Student
+		fields= ['niveau','departement','faculty']
+
+class RegisterInstForm(forms.ModelForm):
+
+	class Meta:
+		model = Student
+		fields= ['niveau','institut']

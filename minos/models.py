@@ -50,13 +50,27 @@ class Student(models.Model):
 	departement = models.ForeignKey(Departement, blank=True, null=True, on_delete=models.CASCADE)
 	faculty = models.ForeignKey(Faculty, blank=True, null=True, on_delete=models.CASCADE)
 	institut = models.ForeignKey(Institut, blank=True, null=True, on_delete=models.CASCADE)
+	fac = models.BooleanField(null=True)
+	inst = models.BooleanField(null=True)
 	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/students/")
 
 	def __str__(self):
 		return f"{self.user.username}"
 
-	def verifyProfil(self):
-		if (self.matricule!= None and self.inscription_date!= None and self.academic_year != None):
+	def verifyStep1(self):
+		if (self.matricule!= None and
+			self.inscription_date!= None and
+			self.academic_year != None and
+			self.genre !=None and
+			self.birthday != None):
+			return True
+
+	def verifyFac(self):
+		if(self.niveau != None and self.faculty!=None):
+			return True
+
+	def verifyInst(self):
+		if(self.niveau != None and sefl.institut != None):
 			return True
 
 class Bank(models.Model):
