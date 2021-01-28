@@ -4,10 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static "styles.css" %}">
-    <title>Se connecter</title>
+    <link rel="stylesheet" href="{% static 'maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+	<title>Page d'acceuil</title>
 </head>
 <body>
+	 <div class="header">
+        <div class="container-fluid">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="home.html">
+                        <h1>
+                            Minos
+                        </h1>
+                    </a>
+                </div>
+                <nav>
+                    <ul id="menuItems">
+                        <li><a href="home.html">Page d'acceuil</a></li>
+                        <li><a href="">Payements</a></li>
+                        <li><a href="">Historique</a></li>
+                </nav>
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class='dropdown-toggle' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="../New folder/lebon.jpg" alt="" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right bg-dark">
+                        <a href="" class="dropdown-item">Profile</a>
+                        <a href="" class="dropdown-item">Parametres</a>
+                        <a href="" class="dropdown-item">Deconnexion</a>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
     <h1>You are home <strong>{{ user.username }}</strong></h1>
+
+
+    <script src="{% static 'ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js' %}"></script>
+    <script src="{% static 'cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js' %}"></script>
+    <script src="{% static 'maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %}"></script>
 </body>
 </html>
