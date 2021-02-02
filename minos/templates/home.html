@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="{% static 'bootstrap/4.5.0/css/bootstrap.min.css'%}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 	<title>Page d'acceuil</title>
 </head>
@@ -39,11 +39,47 @@
         </div>
     </div>
 
-    <h1>You are home <strong>{{ user.username }}</strong></h1>
+        
+        <div class="container my-5 py-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="bg-secondary text-white p-5">
+                      <button type="button" class="btn btn-success">
+                          Validé <span class=" ml-3 badge badge-light">4</span>
+                        </button>
+                        <button type="button" class="btn btn-warning">
+                          En attente <span class=" ml-3 badge badge-light">4</span>
+                        </button>
+                        <button type="button" class="btn btn-danger">
+                          Validé <span class=" ml-3 badge badge-light">4</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-8 px-3">
+                    <h4 class="mb-3">Minos est une application web qui apporte un solution dans le payement des minervels et leur validation en evitant des fils d'attentes à la comptabilite ansi que leur pertes</h4>
+                    <form >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Your Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" placeholder="Your E-mail">
+                            </div>
+                            <div class="col-md-12">
+                                <input type="text" placeholder="Subject">
+                                <textarea placeholder="Your Message"></textarea>
+                                <button class="site-btn">send message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <!-- Contact Section end -->
 
 
-    <script src="{% static 'ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js' %}"></script>
-    <script src="{% static 'cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js' %}"></script>
-    <script src="{% static 'maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'jquery/3.5.1/jquery.min.js' %}"></script>
+    <script src="{% static 'ajax/popper.js/1.16.0/umd/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/4.5.0/js/bootstrap.min.js' %}"></script>
 </body>
 </html>

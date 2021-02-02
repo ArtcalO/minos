@@ -8,8 +8,8 @@
     <title>Creer un compte</title>
 </head>
 <body>
-    <div class="container">
-        <div class="register">
+    <div class="self-container">
+        <div class="self-register">
             <form method="post" action="." enctype="multipart/form-data">
                 {% csrf_token %}
                     {{register_form.first_name}}

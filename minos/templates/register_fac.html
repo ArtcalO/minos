@@ -10,12 +10,12 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="register">
+    <div class="self-container">
+        <div class="self-register">
             <form method="POST" action="{% url "registerFac" %}" autocomplete="false">
                 {% csrf_token %}
                     {{profil_form.as_p}}
-                <div class="btn">
+                <div class="self-btn">
                     <button type="submit">Enregistrer</button>
                 </div>
             </form>
