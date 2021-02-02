@@ -17,7 +17,7 @@
     padding: 30px;
     transform: translate(-50%, -50%);
 }
-input[type='text'], input[type='password'], input[type='email'], .radio, select{
+input[type='text'], input[type='password'], input[type='email'], input[type='number'] .radio, select{
     display: block;
     padding: 3px 5px;
     border-top: 0px;
