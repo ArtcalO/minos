@@ -13,6 +13,14 @@ def home(request):
 		return redirect(register)
 
 @login_required(login_url='/connexion/')
+def validated(request):
+	return render(request, 'validated.html', locals())
+
+@login_required(login_url='/connexion/')
+def pending(request):
+	return render(request, 'pending.html', locals())
+
+@login_required(login_url='/connexion/')
 def register2(request):
 
 	if(request.user):

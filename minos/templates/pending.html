@@ -1,0 +1,39 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div class="container">
+  <h2 class="m-5">Pending</h2>
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>          
+  <table class="table table-dark table-striped">
+  <thead>
+      <tr>
+        <th>Motif</th>
+        <th>Montant</th>
+        <th>Validé le</th>
+        <th>Payé le</th>
+      </tr>
+    </thead>
+    <tbody id="tableRows">
+      <tr>
+        <td>Minos 1 tranche</td>
+        <td>150 000</td>
+        <td>19-03-2020</td>
+        <td>20-03-2020</td>
+      </tr>
+      <tr>
+        <td>Minos 1 tranche</td>
+        <td>150 000</td>
+        <td>19-03-2020</td>
+        <td>20-03-2020</td>
+      </tr>
+      <tr>
+        <td>Minos 1 tranche</td>
+        <td>150 000</td>
+        <td>19-03-2020</td>
+        <td>20-03-2020</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

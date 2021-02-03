@@ -9,6 +9,8 @@
 	<title>Page d'acceuil</title>
 </head>
 <body>
+  {% block navbar %}
+    
 	 <div class="header">
         <div class="container-fluid">
             <div class="navbar">
@@ -38,48 +40,47 @@
             </div>
         </div>
     </div>
+    {% endblock navbar %}
 
+    {% block content %}
+          
         
-        <div class="container my-5 py-5">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="bg-secondary text-white p-5">
-                      <button type="button" class="bg-success">
-                          Validé <span class=" ml-3 badge badge-light">4</span>
-                        </button>
-                        <button type="button" class="bg-warning">
-                          En attente <span class=" ml-3 badge badge-light">4</span>
-                        </button>
-                        <button type="button" class="bg-danger">
-                          Validé <span class=" ml-3 badge badge-light">4</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-lg-8 px-3">
-                    <h4 class="mb-3">Minos est une application web qui apporte un solution dans le payement des minervels et leur validation en evitant des fils d'attentes à la comptabilite ansi que leur pertes</h4>
-                    <form class="m-3" >
-                        <div class="row ">
-                          <div class="col">
-                              <button type="button" class="bg-black" data-toggle="modal" data-target="#payNowModal">
-                                Payer avec Interbank
-                                </button>
-                          </div>
-                          <div class="col">
-                             <button type="button" class="bg-black" data-toggle="modal" data-target="alreadyPayModal">
-                              Dejà payé ? Cliquez Ici !
-                            </button>
-                          </div>
-                          <div class="col"></div>
+      <div class="container my-5 py-5">
+          <div class="row">
+              <div class="col-lg-4">
+                  <div class="bg-secondary text-white p-5">
+                    <button  type="button" class="bg-success">
+                        <a href="{% url "validated" %}">Validé </a><span class=" ml-3 badge badge-light">4</span>
+                      </button>
+                      <button type="button" class="bg-warning">
+                        <a href="{% url "pending" %}">En attente</a> <span class=" ml-3 badge badge-light">4</span>
+                      </button>
+                      <button type="button" class="bg-danger">
+                        Validé <span class=" ml-3 badge badge-light">4</span>
+                      </button>
+                  </div>
+              </div>
+              <div class="col-lg-8 px-3">
+                  <h4 class="mb-3">Minos est une application web qui apporte un solution dans le payement des minervels et leur validation en evitant des fils d'attentes à la comptabilite ansi que leur pertes</h4>
+                  <form class="m-3" >
+                      <div class="row ">
+                        <div class="col">
+                            <button type="button" class="bg-black" data-toggle="modal" data-target="#payNowModal">
+                              Payer avec Interbank
+                              </button>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    <!-- Contact Section end -->
-
-    <!-- Modal start section -->
-    <!-- Button to Open the Modal -->
-            
+                        <div class="col">
+                           <button type="button" class="bg-black" data-toggle="modal" data-target="#alreadyPaidModal">
+                            Dejà payé ? Cliquez Ici !
+                          </button>
+                        </div>
+                        <div class="col"></div>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+    {% endblock content %}
 
             <!-- The 1st Modal -->
             <div class="modal" id="payNowModal">
@@ -94,11 +95,36 @@
                   <!-- Modal body -->
                   <div class="modal-body">
                         <form action="">
-                            <input type="text" name="" id=""  placeholder="Nom">
-                            <input type="text" name="" id=""  placeholder="Prenom">
-                            <input type="number" name="" id=""  placeholder="Numero réçu">
-                            <input type="number" name="" id="" placeholder="Monant">
+                            <input type="text" name="" id=""  placeholder="Numero de compte">
+                            <input type="text" name="" id=""  placeholder="Nom de l'accuse">
+                            <input type="text" name="" id=""  placeholder="Montant payé">
+                            <input type="text" name="" id=""  placeholder="Montant reste">
+                            <input type="text" name="" id="" placeholder="Motif">
                             <button type="submit">Payer</button>
+                        </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- The 2st Modal -->
+            <div class="modal" id="alreadyPaidModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Vos informations</h4>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                        <form action="">
+                            <input type="text" name="" id=""  placeholder="Numero de récu">
+                            <input type="text" name="" id=""  placeholder="Montant payé">
+                            <input type="text" name="" id="" placeholder="Motif">
+                            <button type="submit">Envoyer</button>
                         </form>
                   </div>
 
@@ -110,5 +136,6 @@
     <script src="{% static 'jquery/3.5.1/jquery.min.js' %}"></script>
     <script src="{% static 'ajax/popper.js/1.16.0/umd/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/4.5.0/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'minos.js' %}"></script>
 </body>
 </html>
