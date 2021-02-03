@@ -4,10 +4,35 @@ from django.contrib.auth import logout, login, authenticate
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 
+def randNumber(x):
+	return x+1
+
 @login_required(login_url='/connexion/')
 def home(request):
 	student = Student.objects.get(user=request.user)
 	if ((student.verifyStep1() and student.verifyFac()) or (student.verifyStep1() and student.verifyFac())):
+		bank_pay_form = PayBankForm(request.POST or None)
+		already_paid_form = AlreadyPayForm(request.POST or None, request.FILES)
+		if "payer" in request.POST:
+			if request.method == 'POST' and bank_pay_form.is_valid():
+				pay_form = bank_pay_form.save(commit=False)
+				try:
+					y = BankToken.objects.all().last()
+					x = y.token_number
+					pay_form.token_number = randNumber(x)
+				except :
+					pay_form.token_number = 1
+
+				pay_form.customer = request.user
+				pay_form.save()
+				UltHistoryBankToken(bank_token = pay_form).save()
+			bank_pay_form = PayBankForm()
+		if "deja_paye" in request.POST:
+			if request.method =="POST" and already_paid_form.is_valid():
+				paid_form = already_paid_form.save(commit=False)
+				paid_form.student = request.user
+				paid_form.save()
+			already_paid_form = AlreadyPayForm(request.FILES)
 		return render(request, 'home.html', locals())
 	else:
 		return redirect(register)

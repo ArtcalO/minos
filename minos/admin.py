@@ -10,4 +10,5 @@ admin.site.register(AlreadyPaidStudent)
 admin.site.register(Minerval)
 admin.site.register(Faculty)
 admin.site.register(Institut)
+admin.site.register(BankTokenPaid)
 # Register your models here.

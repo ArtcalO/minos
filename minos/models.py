@@ -82,7 +82,7 @@ class Bank(models.Model):
 	site_web = models.CharField(max_length=100)
 
 	def __str__(self):
-		return f"{self.name}-{self.capital} - {self.head_quarter}"
+		return f"{self.name}"
 
 
 class BankToken(models.Model):
@@ -96,13 +96,29 @@ class BankToken(models.Model):
 	date = models.DateField(default=timezone.now)
 
 	def __str__(self):
-		return f"{self.token_number} by {self.customer.user.username} - {self.paid_amount} "
+		return f"{self.token_number} by {self.customer.username} - {self.paid_amount} "
+
+class BankTokenPaid(models.Model):
+	student = models.ForeignKey(User, related_name="customer", on_delete=models.CASCADE)
+	num_recu = models.IntegerField() 
+	montant_paye = models.IntegerField(null=True)
+	motif = models.TextField(max_length=100)
+	bordereau_blanc = models.ImageField(null=True, blank=True, upload_to="bordereaux/comptables/")
+	bordereau_rose = models.ImageField(null=True, blank=True, upload_to="bordereaux/comptables/")
+	date_paye = models.DateField()
+	date = models.DateField(default=timezone.now)
+
+	def __str__(self):
+		return f"{self.num_recu} by {self.montant_paye} - {self.motif} "
 
 
 class HistoryBankToken(models.Model):
 	student = models.ForeignKey(User, on_delete=models.CASCADE)
 	bank_token = models.ForeignKey(BankToken, on_delete=models.CASCADE)
 	date = models.DateField()
+
+class UltHistoryBankToken(models.Model):
+	bank_token = models.ForeignKey(BankToken, related_name="ulthistory", on_delete=models.CASCADE)
 
 class UltToken(models.Model):
 	token_number = models.IntegerField()

@@ -110,3 +110,67 @@ class RegisterInstForm(forms.ModelForm):
 	class Meta:
 		model = Student
 		fields= ['niveau','institut']
+
+class PayBankForm(forms.ModelForm):
+	account_number = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+			'placeholder':'Numero du compte',
+			'type':'text'
+			}),label='Numero du compte')
+	account_holder = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+			'placeholder':'Ex : ULT, LAC',
+			'type':'text'
+			}),label='Nom du compte')
+	paid_amount = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+			'placeholder':'Montant',
+			'type':'text'
+			}),label='Montant a payer')
+	motif = forms.CharField(
+		widget=forms.TextInput(
+			attrs={
+			'placeholder':'motif',
+			'type':'text'
+			}),label='Motif')
+	class Meta:
+		model = BankToken
+		exclude = ['customer','date', 'token_number']
+
+class AlreadyPayForm(forms.ModelForm):
+	num_recu = forms.CharField(
+		widget=forms.TextInput(attrs={
+			'placeholder':'num_recu',
+			'type':'text'
+			}))
+	montant_paye = forms.CharField(
+		widget=forms.TextInput(attrs={
+			'placeholder':'montant_paye',
+			'type':'text'
+			}))
+	motif = forms.CharField(
+		widget=forms.TextInput(attrs={
+			'placeholder':'motif',
+			'type':'text'
+			}))
+	bordereau_blanc = forms.ImageField( widget=forms.FileInput(
+			attrs={'placeholder':'Image bordereau blanc','class':'form-control'}),
+		label='bordereau blanc', required=True)
+
+	bordereau_rose = forms.ImageField( widget=forms.FileInput(
+			attrs={'placeholder':'Image bordereau rose','class':'form-control'}),
+		label='bordereau rose', required=True)
+
+	date_paye = forms.DateField(
+		widget=forms.TextInput(attrs={
+			'placeholder':'date',
+			'type':'date',
+			'class':'form-control'
+			}))
+
+	class Meta:
+		model = BankTokenPaid
+		exclude = ['date', 'student']
