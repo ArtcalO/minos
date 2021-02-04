@@ -39,11 +39,33 @@ def home(request):
 
 @login_required(login_url='/connexion/')
 def validated(request):
-	return render(request, 'validated.html', locals())
+	validated = True
+	student = Student.objects.get(user=request.user)
+	return render(request, 'payements.html', locals())
+
+@login_required(login_url='/connexion/')
+def information(request):
+	information = True
+	student = Student.objects.get(user=request.user)
+	return render(request, 'payements.html', locals())
 
 @login_required(login_url='/connexion/')
 def pending(request):
-	return render(request, 'pending.html', locals())
+	pending = True
+	student = Student.objects.get(user=request.user)
+	return render(request, 'payements.html', locals())
+
+@login_required(login_url='/connexion/')
+def errors(request):
+	errors = True
+	student = Student.objects.get(user=request.user)
+	return render(request, 'payements.html', locals())
+
+@login_required(login_url='/connexion/')
+def payements(request):
+	payements=True
+	student = Student.objects.get(user=request.user)
+	return render(request, 'payements.html', locals())
 
 @login_required(login_url='/connexion/')
 def register2(request):

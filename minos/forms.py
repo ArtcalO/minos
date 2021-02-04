@@ -157,11 +157,11 @@ class AlreadyPayForm(forms.ModelForm):
 			'type':'text'
 			}))
 	bordereau_blanc = forms.ImageField( widget=forms.FileInput(
-			attrs={'placeholder':'Image bordereau blanc','class':'form-control'}),
+			attrs={'placeholder':'Image bordereau blanc','class':'form-control mb-2'}),
 		label='bordereau blanc', required=True)
 
 	bordereau_rose = forms.ImageField( widget=forms.FileInput(
-			attrs={'placeholder':'Image bordereau rose','class':'form-control'}),
+			attrs={'placeholder':'Image bordereau rose','class':'form-control mb-2'}),
 		label='bordereau rose', required=True)
 
 	date_paye = forms.DateField(
