@@ -14,7 +14,4 @@ urlpatterns = [
     path('errors', views.errors, name="errors"),
     path('payements', views.payements, name="payements"),
     path('information', views.information, name="information"),
-    #path('deconnexion', views.deconnexion, name="deconnexion"),
-    #path('connexion', views.connexion, name="connexion"),
-    #path('vue-payments', views.vue, name="vuepay"),
 ]
