@@ -26,33 +26,120 @@
       </tr>
     </thead>
     <tbody id="tableRows">
-      <tr>
-        <td>Minos 1 tranche</td>
-        <td>150 000</td>
-        <td>19-03-2020</td>
-        <td>Validé</td>
-        <td>
-        	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewModal" >View</button>
+      {% for token in tokens %}
+      {% if token.token_bank_number %}
+        <tr>
+          <td>{{token.token_bank_number.motif}}</td>
+          <td>{{token.token_bank_number.paid_amount}}</td>
+          <td>{{token.token_bank_number.date}}</td>
+          <td>{% if not token.validated %}
+                Non validé
+                {% else %}
+                Validé
+              {% endif %}
+          </td>
+          <td>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewModal{{token.id}}" >View</button>
         </td>
       </tr>
-      <tr>
-        <td>Minos 1 tranche</td>
-        <td>150 000</td>
-        <td>19-03-2020</td>
-        <td>Non validé</td>
-        <td>
-        	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewModal" >View</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Minos 1 tranche</td>
-        <td>150 000</td>
-        <td>19-03-2020</td>
-        <td>Validé</td>
-        <td>
-        	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewModal" >View</button>
-        </td>
-      </tr>
+      {% endif %}
+        {% if token.token_bank_number2 %}
+            <tr>
+              <td>{{token.token_bank_number2.motif}}</td>
+              <td>{{token.token_bank_number2.montant_paye}}</td>
+              <td>{{token.token_bank_number2.date_paye}}</td>
+              <td>{% if not token.validated %}
+                    Non validé
+                    {% else %}
+                    Validé
+                  {% endif %}
+              </td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#viewModal{{token.id}}" >View</button>
+              </td>
+            </tr>
+        {% endif %}
+
+        <!--MODAL VIEW-->
+    <div class="modal" id="viewModal{{ token.id }}">
+      <div class="modal-dialog ">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          
+          {% if token.token_bank_number %}
+            <div class="modal-header">
+              <h4 class="modal-title">Bordeareau N°{{ token.token_bank_number.token_number }}</h4>
+              <span type="button" class="close" data-dismiss="modal" aria-label="Close">x</span>
+            </div>
+                        <!-- Modal body -->
+            <div class="modal-body">
+             <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  Date
+                  <strong>{{ token.token_bank_number.date }}</strong> 
+                    <span class="float-right"> <strong>Status:</strong>{% if token.validated %}
+                      Validé
+                      {% else %}
+                      Non Validé
+                    {% endif %}</span>
+                      </div>
+                        <div class="card-body">
+                          <div class="row mb-4">
+                            <div class="col">
+                              <h6 class="mb-3">Bannque: {{token.token_bank_number.bank.name}}</h6>
+                              <div>Nom et prenom : {{token.token_bank_number.customer.first_name}} {{token.token_bank_number.customer.last_name}} </div>
+                              <div>Numero de compte :  {{token.token_bank_number.account_number}}</div>
+                              <div>Nom du compte : {{token.token_bank_number.account_holder}} </div>
+                              <div>Montant payé : {{token.token_bank_number.paid_amount}}</div>
+                              <div>Motif : {{token.token_bank_number.motif}}</div>
+                              <div>Date : {{token.token_bank_number.date}}</div>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+            {% else %}
+            <div class="modal-header">
+              <h4 class="modal-title">Bordeareau N°{{ token.token_bank_number2.num_recu }}</h4>
+              <span type="button" class="close" data-dismiss="modal" aria-label="Close">x</span>
+            </div>
+
+            <div class="modal-body">
+             <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  Date
+                  <strong>{{ token.token_bank_number2.date_paye }}</strong> 
+                    <span class="float-right"> <strong>Status:</strong>{% if token.validated %}
+                      Validé
+                      {% else %}
+                      Non Validé
+                    {% endif %}</span>
+                      </div>
+                        <div class="card-body">
+                          <div class="row mb-4">
+                            <div class="col">
+                              <h6 class="mb-3">Bannque: {{token.token_bank_number.bank.name}}</h6>
+                              <div>Nom et prenom : {{token.token_bank_number2.student.first_name}} {{token.token_bank_number.student.last_name}} </div>
+                              <div>Montant payé : {{token.token_bank_number2.montant_paye}}</div>
+                              <div>Motif : {{token.token_bank_number2.motif}}</div>
+                              <div>Date : {{token.token_bank_number.date_paye}}</div>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+
+      {% endfor %}
     </tbody>
   </table>
 </div>
@@ -164,7 +251,7 @@
 
 {% if validated %}
 	<div class="container">
-  <h2 class="m-5">Validés</h2>
+  <h2 class="m-3">Validés</h2>
     <input class="form-control" id="myInput" type="text" placeholder="Search..">
   <br>          
   <table class="table table-dark table-striped">
