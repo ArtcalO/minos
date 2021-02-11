@@ -26,12 +26,29 @@ def home(request):
 				pay_form.customer = request.user
 				pay_form.save()
 				UltHistoryBankToken(bank_token = pay_form).save()
+				try:
+					y= UltToken.objects.all().last()
+					x = y.token_number
+					z = randNumber(x)
+					print("#####################")
+					print(x)
+					UltToken(token_number=z, token_bank_number=pay_form).save()
+				except :
+					UltToken(token_number=1, token_bank_number=pay_form).save()
+
 			bank_pay_form = PayBankForm()
 		if "deja_paye" in request.POST:
 			if request.method =="POST" and already_paid_form.is_valid():
 				paid_form = already_paid_form.save(commit=False)
 				paid_form.student = request.user
 				paid_form.save()
+				try:
+					y= UltToken.objects.all().last()
+					x = y.token_number
+					z = randNumber(x)
+					UltToken(token_number=z, token_bank_number2=paid_form).save()
+				except :
+					UltToken(token_number=1, token_bank_number2=paid_form).save()
 			already_paid_form = AlreadyPayForm(request.FILES)
 		return render(request, 'home.html', locals())
 	else:
@@ -65,6 +82,7 @@ def errors(request):
 def payements(request):
 	payements=True
 	student = Student.objects.get(user=request.user)
+	tokens = UltToken.objects.all()
 	return render(request, 'payements.html', locals())
 
 @login_required(login_url='/connexion/')
