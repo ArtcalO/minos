@@ -29,16 +29,6 @@ class Departement(models.Model):
 	def __str__(self):
 		return f"{self.name} - {self.faculty.name}"
 
-
-class Comptable(models.Model):
-	user = models.OneToOneField(User, null=True, verbose_name='Comptable' ,unique=True,on_delete=models.CASCADE)
-	avatar = models.ImageField(null=True, blank=True, upload_to="avatars/comptables/")
-	matricule = models.IntegerField(null=True, blank=True)
-	birthday = models.DateField(null=True, blank=True, max_length=100)
-
-	def __str__(self):
-		return f"{self.user.username} - {self.matricule} "
-
 class Student(models.Model):
 	user = models.OneToOneField(User, null=True, unique=True,on_delete=models.CASCADE)
 	matricule = models.IntegerField(null=True, blank=True)
@@ -122,14 +112,16 @@ class UltHistoryBankToken(models.Model):
 
 class UltToken(models.Model):
 	token_number = models.IntegerField()
-	token_bank_number = models.IntegerField()
-	date = models.DateField(default=timezone.now)
-	student = models.ForeignKey(Student, on_delete=models.CASCADE)
-	amount_paid_ult = models.FloatField()
-	motif = models.CharField(max_length=50)
+	token_bank_number = models.ForeignKey(BankToken, related_name="tokenbank", null=True, blank=True, on_delete=models.CASCADE )
+	token_bank_number2 = models.ForeignKey(BankTokenPaid, null=True, blank=True, on_delete=models.CASCADE)
+	date = models.DateField(default=timezone.now, blank=True, null=True)
+	student = models.CharField(max_length=100, blank=True, null=True)
+	amount_paid_ult = models.FloatField(blank=True, null=True)
+	motif = models.CharField(max_length=50, blank=True, null=True)
+	validated = models.BooleanField(default=False)
 
 	def __str__(self):
-		return f"{self.student.user.username} - {self.amount_paid_ult} "
+		return f"{self.token_number} - {self.validated} "
 
 class AlreadyPaidStudent(models.Model):
 	student = models.ForeignKey(User, on_delete=models.CASCADE)
