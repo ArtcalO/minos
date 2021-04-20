@@ -188,3 +188,7 @@ def register(request):
 	register_form = StudentForm()
 	return render(request, 'register.html', locals())
 
+
+@login_required(login_url='/connexion/')
+def profile(request):
+	return render(request, 'profile.html', locals())

@@ -37,7 +37,7 @@
                         <img src="{{student.avatar.url}}" alt="" class="rounded-circle">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right bg-dark">
-                        <a href="" class="dropdown-item">Profile</a>
+                        <a href="{% url "profile" %}" class="dropdown-item">Profile</a>
                         <a href="" class="dropdown-item">Parametres</a>
                         <a href="" class="dropdown-item">Deconnexion</a>
                     </div>
@@ -131,8 +131,6 @@
                 </div>
               </div>
             </div>
-
-
     <script src="{% static 'jquery/3.5.1/jquery.min.js' %}"></script>
     <script src="{% static 'ajax/popper.js/1.16.0/umd/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/4.5.0/js/bootstrap.min.js' %}"></script>
